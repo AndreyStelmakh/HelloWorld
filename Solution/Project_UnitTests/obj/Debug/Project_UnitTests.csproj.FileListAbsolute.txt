@@ -1,0 +1,7 @@
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\bin\Debug\Project_UnitTests.dll
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\bin\Debug\Project_UnitTests.pdb
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\bin\Debug\Project_Library.dll
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\bin\Debug\Project_Library.pdb
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\obj\Debug\Project_UnitTests.csprojResolveAssemblyReference.cache
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\obj\Debug\Project_UnitTests.dll
+D:\GitHub\HelloWorld\Solution\Project_UnitTests\obj\Debug\Project_UnitTests.pdb
