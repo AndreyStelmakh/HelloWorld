@@ -19,7 +19,7 @@ namespace BlueButton
             var arg = new System.Net.Sockets.SocketAsyncEventArgs() { RemoteEndPoint = IPEndPoint };
 
             arg.SetBuffer(command, 0, command.Length);
-            arg.Completed += Arg_Completed;
+            arg.Completed += Sending_Completed;
 
             var result = _socket.ConnectAsync(arg);
 
@@ -28,11 +28,21 @@ namespace BlueButton
 
         }
 
-        private static void Arg_Completed(object sender, System.Net.Sockets.SocketAsyncEventArgs e)
+        private static void Sending_Completed(object sender, System.Net.Sockets.SocketAsyncEventArgs e)
+        {
+            var arg = new System.Net.Sockets.SocketAsyncEventArgs() {   };
+            arg.Completed += Receiving_Completed;
+            arg.SetBuffer(new byte[1000], 0, 1000);
+            _socket.ReceiveAsync(arg);
+
+            //throw new NotImplementedException();
+
+        }
+
+        private static void Receiving_Completed(object sender, System.Net.Sockets.SocketAsyncEventArgs e)
         {
             _socket.Dispose();
             _socket = null;
-            //throw new NotImplementedException();
 
         }
 
