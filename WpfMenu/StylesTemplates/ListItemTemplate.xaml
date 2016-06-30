@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfMenu.StylesTemplates"
+                    xmlns:converters="clr-namespace:WpfMenu.ValueConverters"
+                    >
+
+    <converters:LessThanXToBooleanValueConverter x:Key="LessThanXToBooleanValueConverter" />
+
+    <DataTemplate x:Key="ListItemDataTemplate">
+        <TextBlock Text="{Binding}" x:Name="PART_TextBlock" />
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Converter={StaticResource LessThanXToBooleanValueConverter}, ConverterParameter=5}" Value="True"  >
+                <Setter TargetName="PART_TextBlock" Property="Foreground" Value="Red" />
+
+            </DataTrigger>
+        </DataTemplate.Triggers>
+
+    </DataTemplate>
+
+</ResourceDictionary>
+    
+    

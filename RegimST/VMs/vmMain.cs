@@ -72,6 +72,24 @@ namespace RegimST.VMs
 
         }
 
+        public RelayCommand MoveItemCommand
+        {
+            get
+            {
+                return _MoveItemCommand;
+
+            }
+
+            set
+            {
+                _MoveItemCommand = value;
+
+                RaisePropertyChanged(() => MoveItemCommand);
+
+            }
+
+        }
+
         Random _random = new Random();
 
         public vmMain()
@@ -87,8 +105,6 @@ namespace RegimST.VMs
                     (a) => {
                         ObjectPositionDescriptors.Add(new ObjectPositionDescriptor()
                         {
-                            Left = 50 + 300*_random.NextDouble(),
-                            Top = 50 + 300*_random.NextDouble(),
                             Images = _images
                         });
 
@@ -106,8 +122,12 @@ namespace RegimST.VMs
 
                                 currentMatrix.Rotate(d.DeltaEventArgs.DeltaManipulation.Rotation);
                                 currentMatrix.Scale(d.DeltaEventArgs.DeltaManipulation.Scale.X, d.DeltaEventArgs.DeltaManipulation.Scale.Y);
+                                currentMatrix.Translate(d.DeltaEventArgs.DeltaManipulation.Translation.X, d.DeltaEventArgs.DeltaManipulation.Translation.Y);
 
-                                //System.Windows.MessageBox.Show("");
+                                //d.PositionDescriptor.Left = d.DeltaEventArgs.DeltaManipulation.Translation.X;
+                                //System.Windows.MessageBox.Show(string.Format("{0} {1}",
+                                //    d.DeltaEventArgs.DeltaManipulation.Translation.X,
+                                //    d.DeltaEventArgs.DeltaManipulation.Translation.Y));
 
                                 d.PositionDescriptor.ManipulationMatrix = currentMatrix;
 
@@ -127,6 +147,41 @@ namespace RegimST.VMs
 
                     });
 
+            MoveItemCommand = new RelayCommand(
+                    (a) => {
+                        var d = a as TouchMoveArgs;
+
+                        if (d != null)
+                        {
+                            //if (d.MoveEventArgs != null)
+                            //{
+                            //    var currentMatrix = d.PositionDescriptor.ManipulationMatrix;
+
+                            //    currentMatrix.Translate(d.)
+                                
+                            //    currentMatrix.Rotate(d.MoveEventArgs.DeltaManipulation.Rotation);
+                            //    currentMatrix.Scale(d.DeltaEventArgs.DeltaManipulation.Scale.X, d.DeltaEventArgs.DeltaManipulation.Scale.Y);
+
+                            //                //System.Windows.MessageBox.Show("");
+
+                            //                d.PositionDescriptor.ManipulationMatrix = currentMatrix;
+
+                            //}
+                            //            //todo: отладка
+                            //            else
+                            //{
+                            //    var currentMatrix = d.PositionDescriptor.ManipulationMatrix;
+                            //    currentMatrix.Rotate(5);
+                            //    currentMatrix.Scale(1.01, 1.01);
+
+                            //    d.PositionDescriptor.ManipulationMatrix = currentMatrix;
+
+                            //}
+
+                        }
+
+                    });
+
         }
 
         private ObservableCollection<ObjectPositionDescriptor> _objectPositionDescriptors = new ObservableCollection<ObjectPositionDescriptor>();
@@ -134,48 +189,13 @@ namespace RegimST.VMs
 
         private RelayCommand _addItemCommand;
         private RelayCommand _manipulationCommand;
+        private RelayCommand _MoveItemCommand;
 
         /// <summary>
         /// Тип описателя объекта (только необходимые свойства)
         /// </summary>
         public class ObjectPositionDescriptor : ExtendedNotify
         {
-            public double Left
-            {
-                get
-                {
-                    return _left;
-
-                }
-
-                set
-                {
-                    _left = value;
-
-                    RaisePropertyChanged(() => _left);
-
-                }
-
-            }
-
-            public double Top
-            {
-                get
-                {
-                    return _top;
-
-                }
-
-                set
-                {
-                    _top = value;
-
-                    RaisePropertyChanged(() => _top);
-
-                }
-
-            }
-
             /// <summary>
             /// Коллекция кадров для демонстрации
             /// </summary>
@@ -215,10 +235,7 @@ namespace RegimST.VMs
 
             }
 
-            private double _left;
-            private double _top;
             private Matrix _manipulationMatrix;
-
             private ObservableCollection<BitmapImage> _images;
 
         }
@@ -236,6 +253,21 @@ namespace RegimST.VMs
             public System.Windows.Input.ManipulationDeltaEventArgs DeltaEventArgs;
 
         }
+
+        public class TouchMoveArgs
+        {
+            public TouchMoveArgs(ObjectPositionDescriptor positionDescriptor, System.Windows.Input.TouchEventArgs moveEventArgs)
+            {
+                PositionDescriptor = positionDescriptor;
+                MoveEventArgs = moveEventArgs;
+
+            }
+
+            public ObjectPositionDescriptor PositionDescriptor;
+            public System.Windows.Input.TouchEventArgs MoveEventArgs;
+
+        }
+
 
     }
 

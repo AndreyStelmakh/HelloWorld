@@ -39,6 +39,18 @@ namespace RegimST
 
         }
 
+        private void SomeControl_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
+        {
+            var control = sender as System.Windows.Controls.Control;
+
+            if (control != null)
+            {
+                e.ManipulationContainer = WorkCanvas;
+
+            }
+
+        }
+
         private void SomeControl_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
             var control = sender as System.Windows.Controls.Control;
@@ -118,6 +130,54 @@ namespace RegimST
             else
             {
                 return value;
+
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+
+        }
+
+    }
+
+    class LeftComponentMatrixConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if(value is System.Windows.Media.Matrix)
+            {
+                return ((System.Windows.Media.Matrix)value).OffsetX;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class RightComponentMatrixConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is System.Windows.Media.Matrix)
+            {
+                return ((System.Windows.Media.Matrix)value).OffsetY;
+
+            }
+            else
+            {
+                return null;
 
             }
 

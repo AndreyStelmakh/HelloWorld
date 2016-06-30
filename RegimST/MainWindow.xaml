@@ -17,6 +17,8 @@
 
         <local:MatrixToRotation x:Key="MatrixToRotationValueConverter" />
         <local:MatrixToScale x:Key="MatrixToScaleValueConverter" />
+        <local:LeftComponentMatrixConverter x:Key="LeftComponentMatrixConverter" />
+        <local:RightComponentMatrixConverter x:Key="RightComponentMatrixConverter" />
     </Window.Resources>
     <Grid >
         <Button Content="x" Click="Button_Click_1" HorizontalAlignment="Right" VerticalAlignment="Top" >
@@ -43,7 +45,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <ItemsControl ItemsSource="{Binding ObjectPositionDescriptors}" >
+        <ItemsControl ItemsSource="{Binding ObjectPositionDescriptors}" x:Name="WorkCanvas">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
@@ -54,6 +56,7 @@
                     <local:SomeControl Images="{Binding Images}"
                                        RenderTransformOrigin="0.5, 0.5"
                                        IsManipulationEnabled="True"
+                                       ManipulationStarting="SomeControl_ManipulationStarting"
                                        ManipulationDelta="SomeControl_ManipulationDelta"
                                        >
                         <local:SomeControl.RenderTransform>
@@ -63,16 +66,15 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
-                <Style >
-                    <Setter Property="Canvas.Left" Value="{Binding Left}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Top}" />
+                <Style>
+                    <Setter Property="Canvas.Left" Value="200" />
+                    <Setter Property="Canvas.Top" Value="200" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
-
         </ItemsControl>
 
-        <ScrollViewer VerticalAlignment="Bottom" HorizontalAlignment="Right" VerticalScrollBarVisibility="Auto">
-        <ItemsControl ItemsSource="{Binding ObjectPositionDescriptors}" Grid.IsSharedSizeScope="True">
+        <ScrollViewer VerticalAlignment="Bottom" HorizontalAlignment="Right" VerticalScrollBarVisibility="Auto" IsHitTestVisible="False" >
+        <ItemsControl ItemsSource="{Binding ObjectPositionDescriptors}" Grid.IsSharedSizeScope="True" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -85,10 +87,10 @@
                             <ColumnDefinition Width="5" />
                             <ColumnDefinition Width="auto" SharedSizeGroup="D"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Left, StringFormat=#####.00}" HorizontalAlignment="Right" />
-                        <TextBlock Text="{Binding Top, StringFormat=#####.00}" HorizontalAlignment="Right" Grid.Column="2" />
-                        <TextBlock Text="{Binding ManipulationMatrix, Converter={StaticResource MatrixToRotationValueConverter}, StringFormat=#####.00}" HorizontalAlignment="Right" Grid.Column="4" />
-                        <TextBlock Text="{Binding ManipulationMatrix, Converter={StaticResource MatrixToScaleValueConverter}, StringFormat=#####.00}" HorizontalAlignment="Right" Grid.Column="6" />
+                        <TextBlock Text="{Binding ManipulationMatrix, Converter={StaticResource LeftComponentMatrixConverter}, StringFormat=####0.00}" HorizontalAlignment="Right" />
+                        <TextBlock Text="{Binding ManipulationMatrix, Converter={StaticResource RightComponentMatrixConverter}, StringFormat=####0.00}" HorizontalAlignment="Right" Grid.Column="2" />
+                        <TextBlock Text="{Binding ManipulationMatrix, Converter={StaticResource MatrixToRotationValueConverter}, StringFormat=####0.00}" HorizontalAlignment="Right" Grid.Column="4" />
+                        <TextBlock Text="{Binding ManipulationMatrix, Converter={StaticResource MatrixToScaleValueConverter}, StringFormat=####0.00}" HorizontalAlignment="Right" Grid.Column="6" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
