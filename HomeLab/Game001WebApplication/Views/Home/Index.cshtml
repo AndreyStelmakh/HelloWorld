@@ -1,0 +1,121 @@
+﻿@using Game001WebApplication.Models
+@model IndexViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+    <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+
+            <h4>Use a local account to log in.</h4>
+            <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group"  >
+            @Html.LabelFor(m => m.Login, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Login, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Login, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PinCode, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.PinCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PinCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    <div class="form-group">
+        @for (int i = 0; i < Html.ViewData.Model.Bets.Count; i++)
+        {
+
+            <div class="col-md-10">
+                @Html.DisplayFor(m => m.Bets[i].AssetName)
+                <span>. </span>
+                @Html.DisplayFor(m => m.Bets[i].Addition)
+            </div>
+
+
+            <table><tr><td>
+                @Html.Label("Объём", new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Bets[i].Volume, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Bets[i].Volume, "", new { @class = "text-danger" })
+                </div>
+                </td>
+                
+                <td>
+                @Html.LabelFor(m => m.Bets[i].Price, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Bets[i].Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Bets[i].Price, "", new { @class = "text-danger" })
+                </div>
+                </td></tr></table>
+
+        }
+    </div>
+            
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сделать ставку" class="btn btn-default" />
+            </div>
+        </div>
+
+                            @*<p>
+                    @Html.ActionLink("Register as a new user", "Register")
+                </p>*@
+            @* Enable this once you have account confirmation enabled for password reset functionality
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
+        }
+    </section>
+
+
+    <div class="jumbotron">
+        <h1>Результаты</h1>
+        @for (int i = 30; i != 0; i--)
+        {
+            <div style="font-weight:bolder">Раунд&nbsp;@i</div>
+            for (int objectID = 1; objectID < 4; objectID++)
+            {
+                <div style="font-size:x-small; font-style:italic; padding-top:3em">Объект @objectID: объём 12.4 цена 500.4</div>
+                
+                <table>
+                    <tr ><td colspan="2" align="center" style="font-size:smaller;">РСВ</td><td colspan="2" align="center" style="font-size:smaller; border-left:1px solid;">БР</td><td rowspan="3" valign="bottom" style="border-left:1px solid;">48.4</td></tr>
+                    <tr style="font-size:smaller"><td style="border-left: 1px solid">12.1</td><td style ="border-left: 1px solid">12.1</td><td style ="border-left: 1px solid">12.1</td><td style ="border-left: 1px solid">12.1</td></tr>
+                    <tr style="font-size:smaller"><td colspan="2" style="border-left: 1px solid">24.2</td><td valign="bottom" colspan="2" style="border-left: 1px solid">24.2</td></tr>
+
+                </table>
+            }
+            <br/>
+        }
+
+        @*<p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+            <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+    </div>
+
+
+@*<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>*@

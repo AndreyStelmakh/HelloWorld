@@ -1,0 +1,6 @@
+﻿
+
+
+CREATE SCHEMA [wa001]
+    AUTHORIZATION [dbo];
+

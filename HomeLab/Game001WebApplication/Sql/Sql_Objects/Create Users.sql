@@ -1,0 +1,15 @@
+﻿CREATE USER TanyaGm
+	FOR LOGIN TanyaGm
+	WITH DEFAULT_SCHEMA = wa001
+
+GO
+
+GRANT CONNECT TO [TanyaGm]
+Go
+
+
+GRANT EXECUTE On Schema::wa001 TO TanyaGm
+
+
+Go
+
